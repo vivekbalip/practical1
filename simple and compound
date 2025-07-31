@@ -1,0 +1,14 @@
+Public Class Form1
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Dim principal As Double = Val(TextBox1.Text)
+        Dim rate As Double = Val(TextBox2.Text)
+        Dim time As Double = Val(TextBox3.Text)
+
+        Dim simpleinterest As Double = (principal * rate * time) / 100
+        Dim compoundInterest As Double = principal * Math.Pow((1 + rate / 100), time) - principal
+
+        TextBox4.Text = simpleInterest.ToString("0.00")
+        TextBox5.Text = compoundInterest.ToString("0.00")
+
+    End Sub
+End Class
