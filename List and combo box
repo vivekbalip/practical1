@@ -1,0 +1,51 @@
+Public Class Form1
+
+    ' ADD ITEM to ListBox and ComboBox
+    Private Sub ButtonAdd_Click(sender As Object, e As EventArgs) Handles ButtonAdd.Click
+        Dim item As String = TextBox1.Text.Trim()
+
+        If item <> "" Then
+            ListBox1.Items.Add(item)
+            ComboBox1.Items.Add(item)
+            TextBox1.Clear()
+        Else
+            MessageBox.Show("Please enter an item to add.")
+        End If
+    End Sub
+
+    ' SHOW SELECTED ITEM from ListBox
+    Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox1.SelectedIndexChanged
+        If ListBox1.SelectedIndex <> -1 Then
+            Label1.Text = "ListBox Selected: " & ListBox1.SelectedItem.ToString()
+        End If
+    End Sub
+
+    ' SHOW SELECTED ITEM from ComboBox
+    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
+        If ComboBox1.SelectedIndex <> -1 Then
+            Label2.Text = "ComboBox Selected: " & ComboBox1.SelectedItem.ToString()
+        End If
+    End Sub
+
+    ' REMOVE SELECTED ITEM from both ListBox and ComboBox
+    Private Sub ButtonRemove_Click(sender As Object, e As EventArgs) Handles ButtonRemove.Click
+        If ListBox1.SelectedIndex <> -1 Then
+            ListBox1.Items.RemoveAt(ListBox1.SelectedIndex)
+        End If
+
+        If ComboBox1.SelectedIndex <> -1 Then
+            ComboBox1.Items.RemoveAt(ComboBox1.SelectedIndex)
+            ComboBox1.Text = "" ' Also clear the display
+        End If
+    End Sub
+
+    ' CLEAR ALL items from ListBox and ComboBox
+    Private Sub ButtonClear_Click(sender As Object, e As EventArgs) Handles ButtonClear.Click
+        ListBox1.Items.Clear()
+        ComboBox1.Items.Clear()
+        ComboBox1.Text = "" ' Clear ComboBox visible text
+        Label1.Text = "ListBox Selected:"
+        Label2.Text = "ComboBox Selected:"
+    End Sub
+
+End Class
