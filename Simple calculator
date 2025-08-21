@@ -1,0 +1,81 @@
+Public Class Form1
+
+    ' Calculator state variables
+    Dim currentValue As Double = 0
+    Dim currentOperator As String = ""
+    Dim isNewEntry As Boolean = True
+
+    ' Load all button handlers when form starts
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' Digit buttons 0–9 (Button1 to Button10)
+        For i As Integer = 1 To 10
+            Dim btn As Button = CType(Me.Controls("Button" & i), Button)
+            AddHandler btn.Click, AddressOf DigitButton_Click
+        Next
+
+        ' Operator buttons: +, -, *, /
+        AddHandler Button11.Click, AddressOf OperatorButton_Click
+        AddHandler Button12.Click, AddressOf OperatorButton_Click
+        AddHandler Button13.Click, AddressOf OperatorButton_Click
+        AddHandler Button14.Click, AddressOf OperatorButton_Click
+
+        ' Equal (=) and Clear (C)
+        AddHandler ButtonEq.Click, AddressOf EqualButton_Click
+        AddHandler ButtonC.Click, AddressOf ClearButton_Click
+    End Sub
+
+    ' Handle digit buttons (0–9)
+    Private Sub DigitButton_Click(sender As Object, e As EventArgs)
+        Dim btn As Button = DirectCast(sender, Button)
+        If isNewEntry Then
+            TextBox1.Text = btn.Text
+            isNewEntry = False
+        Else
+            TextBox1.Text &= btn.Text
+        End If
+    End Sub
+
+    ' Handle operator buttons (+ - * /)
+    Private Sub OperatorButton_Click(sender As Object, e As EventArgs)
+        Dim btn As Button = DirectCast(sender, Button)
+        currentValue = Val(TextBox1.Text)
+        currentOperator = btn.Text
+        isNewEntry = True
+    End Sub
+
+    ' Handle equal (=)
+    Private Sub EqualButton_Click(sender As Object, e As EventArgs)
+        Dim secondValue As Double = Val(TextBox1.Text)
+        Dim result As Double = 0
+
+        Select Case currentOperator
+            Case "+"
+                result = currentValue + secondValue
+            Case "-"
+                result = currentValue - secondValue
+            Case "*"
+                result = currentValue * secondValue
+            Case "/"
+                If secondValue <> 0 Then
+                    result = currentValue / secondValue
+                Else
+                    MessageBox.Show("Cannot divide by zero")
+                    Exit Sub
+                End If
+            Case Else
+                result = secondValue
+        End Select
+
+        TextBox1.Text = result.ToString()
+        isNewEntry = True
+    End Sub
+
+    ' Handle clear (C)
+    Private Sub ClearButton_Click(sender As Object, e As EventArgs)
+        TextBox1.Clear()
+        currentValue = 0
+        currentOperator = ""
+        isNewEntry = True
+    End Sub
+
+End Class
